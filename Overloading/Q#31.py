@@ -1,17 +1,22 @@
+from multipledispatch import dispatch
 
- class MathOperation:
-    # def __init__(self,a,b):
-    #     self.a=a
-    #     self.b=b
-    a=int(input("Enter first value"))
-    b=int(input("Enter second value"))
-    def Addition(self,int ):
-        print("Addition of two integer is",self.a+self.b)
-    def Addition(self,float):
-        print("Addition of two floating value is", self.a + self.b)
+class MathOperation:
+    @dispatch(int , int)
+    def addition(self, a , b ):
+        print("Addition of two integer is",a+b)
 
-    # def Addition(self,list):
-    #     print("Addition of two list is", self.a + self.b)
+    @dispatch(float, float)
+    def addition(self, a , b ):
+        print("Addition of two float number is".format(a + b))
+
+    @dispatch(list)
+    def addition(self, numbers):
+        sum = 0
+        for num in numbers:
+            sum = sum + num
+        print("Addition of list is ", sum)
+
+
 
 m = MathOperation()
-m.Addition()
+m.addition([1,2,3,4])

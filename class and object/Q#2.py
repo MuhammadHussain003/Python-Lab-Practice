@@ -1,11 +1,11 @@
 class Book:
-    title=""
-    author=""
-    ISBN=0
     def __init__(self,title,author,ISBN):
-        self.title=title
-        self.author=author
-        self.ISBN=ISBN
+        self.title=[]
+        self.author=[]
+        self.ISBN=[]
+    def book(self,title,author,ISBN):
+        pass
+
 
 class Library:
     books=[]
