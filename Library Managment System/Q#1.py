@@ -1,87 +1,55 @@
 class Book:
-    def __init__(self, title, author, isbn):
+
+    def __init__(self,title,author,ISBN,availability_status):
         self.title = title
         self.author = author
-        self.isbn = isbn
-        self.available = True
-
-    def borrow(self):
-        if self.available:
-            self.available = False
-            print(f"{self.title} borrowed successfully!")
-        else:
-            print(f"{self.title} is not available.")
-
-    def return_book(self):
-        self.available = True
-        print(f"{self.title} returned successfully!")
-
-
+        self.ISBN = ISBN
+        self.availability_status = True
 class Member:
-    def __init__(self, name, member_id):
+
+    def __init__(self,name,member_Id,borrow_book):
+
         self.name = name
-        self.member_id = member_id
-        self.borrowed_books = []
-
-    def borrow_book(self, book):
-        if len(self.borrowed_books) < 3:
-            self.borrowed_books.append(book)
-            book.borrow()
-        else:
-            print("You have already borrowed 3 books.")
-
-    def return_book(self, book):
-        self.borrowed_books.remove(book)
-        book.return_book()
-
+        self.member_Id = member_Id
+        self.borrowed_book = []
 
 class Library:
     def __init__(self):
         self.books = []
         self.members = []
+        self.borrow_limit = 3
 
     def add_book(self, book):
         self.books.append(book)
-        print("Available Books:")
-        if book.available:
-            print(f"Title: {book.title}, Author: {book.author}, ISBN: {book.isbn}")
+        print(f"Book '{book}' added to the library.")
 
-    def remove_book(self, isbn):
-        for book in self.books:
-            if book.isbn == isbn:
-                self.books.remove(book)
-                break
+    def remove_book(self, book):
+        if book in self.books:
+            self.books.remove(book)
+            print(f"Book '{book}' removed from the library.")
+        else:
+            print(f"Book '{book}' not found in the library.")
 
     def register_member(self, member):
         self.members.append(member)
-        print("Registered Members:")
-        print(f"Name: {member.name}, Member ID: {member.member_id}")
-    def display_books(self):
-        print("Available Books:")
-        for book in self.books:
-            if book.available:
-                print(f"Title: {book.title}, Author: {book.author}, ISBN: {book.isbn}")
+        print(f"Member '{self.members}' registered.")
+
+    def borrow_book(self, member, book_title):
+        if member in self.members:
+            if len(member.borrowed_book) < self.borrow_limit:
+                for book in self.books:
+                    if book.title == book_title and book.available:
+                        member.borrow_book.append(book)
+                        print(f"Book '{book.title}' borrowed by {member}.")
+
+                    print(f"Book '{book_title}' is not available.")
+            else:
+                print(f"Member {member} has reached the maximum borrow limit.")
+        else:
+            print(f"Member '{member}' is not registered.")
 
 
-library = Library()
-
-book1 = Book("Math", " Bilal Sheikh", "123")
-book2 = Book("English", " Asif Saeed", "456")
-
-library.add_book(book1)
-library.add_book(book2)
-
-member1 = Member("Ali", "M001")
-library.register_member(member1)
-
-library.display_books()
-
-member1.borrow_book(book1)
-member1.borrow_book(book2)
-
-library.display_books()
-
-member1.return_book(book1)
-
-library.display_books()
-
+l = Library()
+l.register_member(["hassan"])
+l.add_book("English")
+l.borrow_book("hassan","English")
